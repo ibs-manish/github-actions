@@ -13,5 +13,6 @@ RUN pip3 install --upgrade pip && \
     pip3 install --no-cache-dir awscli
 
 RUN aws sts get-caller-identity
+RUN aws ec2 describe-instances --region us-east-2
 RUN chmod +x script.sh
 CMD cd /github-actions && ./script.sh
