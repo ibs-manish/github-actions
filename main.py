@@ -53,8 +53,9 @@ def aws_ssm_send_command():
         time.sleep(5) # Wait for 5 seconds
         status = getCommandStatus(CommandId)
     
-    [ SuccessOutput , ErrorOutput ] = getCommandOutput(CommandId)
+    [ Status , SuccessOutput , ErrorOutput ] = getCommandOutput(CommandId)
 
+    print(f"Status: {Status}")
     print(f"SuccessOutput: {SuccessOutput}")
     print(f"ErrorOutput: {ErrorOutput}")
 
@@ -66,7 +67,7 @@ def getCommandStatus(CommandId):
 def getCommandOutput(CommandId):
     response = SSM.get_command_invocation( CommandId=CommandId , InstanceId=instance_id )
     print(f"response for getCommandOutput: {response}")
-    return [ response['StandardOutputContent'] , response['StandardErrorContent'] ]
+    return [ response['Status'] , response['StandardOutputContent'] , response['StandardErrorContent'] ]
 
 if __name__ == "__main__":
     main()
