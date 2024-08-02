@@ -1,0 +1,29 @@
+name: "Main action file of Docker container"
+description: "Docker container actions"
+
+inputs:
+  job:
+    description: region of ec2 in aws
+    required: true
+  aws_region:
+    description: region of ec2 in aws
+    required: true
+  aws_access_key_id:
+    description: access key id of IAM user in aws
+    required: true
+  aws_secret_access_key:
+    description: secret access key of IAM user in aws
+    required: true
+  instance_id:
+    description: region of ec2 in aws
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    JOB: ${{ inputs.job }}
+    AWS_REGION: ${{ inputs.aws_region }}
+    AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
+    AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
+    INSTANCE_ID: ${{ inputs.instance_id }}

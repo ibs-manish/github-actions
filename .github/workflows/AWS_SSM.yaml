@@ -1,0 +1,19 @@
+name: 'SEND BASH COMMAND TO EC2 USING SSM'
+
+on: ["push" , "workflow_dispatch"]
+      
+permissions: write-all    
+      
+env:
+  JOB: AWS_SSM
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  INSTANCE_ID: ${{ secrets.INSTANCE_ID }}
+ 
+jobs:
+  AWS_SSM:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssm-send-command
+        uses: ./
