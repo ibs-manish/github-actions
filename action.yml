@@ -21,6 +21,12 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.job }}
+    - ${{ inputs.aws_region }}
+    - ${{ inputs.aws_access_key_id }}
+    - ${{ inputs.aws_secret_access_key }}
+    - ${{ inputs.instance_id }}
   env:
     JOB: ${{ inputs.job }}
     AWS_REGION: ${{ inputs.aws_region }}
