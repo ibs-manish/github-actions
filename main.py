@@ -30,10 +30,14 @@ def main():
 def aws_ssm_send_command():
     print("---------------running aws_ssm_send_command---------------")
 
-    response = boto3.client('ec2', region_name=aws_region).describe_instances(
+    response = boto3.client('ec2', 
+                            aws_access_key_id=aws_access_key_id, 
+                            aws_secret_access_key=aws_secret_access_key , 
+                            region_name=aws_region
+                            ).describe_instances(
         MaxResults=123
     )
     print(response)
-    
+
 if __name__ == "__main__":
     main()
