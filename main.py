@@ -59,10 +59,12 @@ def aws_ssm_send_command():
 
 def getCommandStatus(CommandId):
     response = SSM.list_command_invocations( CommandId=CommandId , Details=False )
+    print(f"response for getCommandStatus: {response}")
     return response['CommandInvocations']['Status']
 
 def getCommandOutput(CommandId):
     response = SSM.get_command_invocation( CommandId=CommandId )
+    print(f"response for getCommandOutput: {response}")
     return [ response['StandardOutputContent'] , response['StandardErrorContent'] ]
 
 if __name__ == "__main__":
