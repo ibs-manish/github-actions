@@ -45,8 +45,9 @@ def aws_ssm_send_command():
     )
 
     CommandId = response['Command']['CommandId']
-    status = getCommandStatus(CommandId)
-
+    status = 'InProgress'
+    print(f"CommandId: {CommandId}")
+    
     while( status == 'InProgress' or status == 'Pending' ):
         print(f"Waiting for command to complete...")
         time.sleep(5) # Wait for 5 seconds
