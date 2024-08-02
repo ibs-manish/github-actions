@@ -1,4 +1,5 @@
 import os
+import time
 import boto3
 
 # env variables
@@ -17,6 +18,8 @@ assert aws_region ,           "Must Provide aws_region for this workflow"
 assert aws_access_key_id,     "Must Provide aws_access_key_id for this workflow"
 assert aws_secret_access_key, "Must Provide aws_secret_access_key for this workflow"
 assert instance_id,           "Must Provide instance_id for this workflow"
+assert working_dir,           "Must Provide working_dir for this workflow"
+assert commands,              "Must Provide commands for this workflow"
 
 #initiating boto3
 SSM = boto3.client('ssm', region_name=aws_region)
@@ -40,16 +43,27 @@ def aws_ssm_send_command():
 
         }
     )
-    # response = SSM.send_command(
-    #     InstanceIds=[ instance_id ],
-    #     DocumentName='AWS-RunShellScript',
-    #     Parameters={
-    #         'workingDirectory': [ working_dir ],
-    #         'commands': [ commands ]
 
-    #     }
-    # )
-    print(response)
+    CommandId = response['Command']['CommandId']
+    status = getCommandStatus(CommandId)
+
+    while( status == 'InProgress' or status == 'Pending' ):
+        print(f"Waiting for command to complete...")
+        time.sleep(5) # Wait for 5 seconds
+        status = getCommandStatus(CommandId)
+    
+    [ SuccessOutput , ErrorOutput ] = getCommandOutput(CommandId)
+
+    print(f"SuccessOutput: {SuccessOutput}")
+    print(f"ErrorOutput: {ErrorOutput}")
+
+def getCommandStatus(CommandId):
+    response = SSM.list_command_invocations( CommandId=CommandId , Details=False )
+    return response['CommandInvocations']['Status']
+
+def getCommandOutput(CommandId):
+    response = SSM.get_command_invocation( CommandId=CommandId )
+    return [ response['StandardOutputContent'] , response['StandardErrorContent'] ]
 
 if __name__ == "__main__":
     main()
