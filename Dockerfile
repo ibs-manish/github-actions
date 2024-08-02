@@ -12,5 +12,6 @@ COPY . .
 RUN pip3 install --upgrade pip && \
     pip3 install --no-cache-dir awscli
 
+RUN aws sts get-caller-identity
 RUN chmod +x script.sh
 CMD cd /github-actions && ./script.sh
