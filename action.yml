@@ -17,6 +17,12 @@ inputs:
   instance_id:
     description: region of ec2 in aws
     required: true
+  working_dir:
+    description: region of ec2 in aws
+    required: true
+  commands:
+    description: region of ec2 in aws
+    required: true
 
 runs:
   using: 'docker'
@@ -27,3 +33,5 @@ runs:
     AWS_ACCESS_KEY_ID: ${{ inputs.aws_access_key_id }}
     AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
     INSTANCE_ID: ${{ inputs.instance_id }}
+    WORKING_DIR: ${{ inputs.working_dir }}
+    COMMANDS: ${{ inputs.commands }}
