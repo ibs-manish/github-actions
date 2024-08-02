@@ -15,5 +15,8 @@ jobs:
   AWS_SSM:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
       - name: ssm-send-command
         uses: ./
