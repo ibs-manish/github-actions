@@ -40,7 +40,6 @@ def aws_ssm_send_command():
         Parameters={
             'workingDirectory': [ working_dir ],
             'commands': [ commands ]
-
         }
     )
 
@@ -61,12 +60,10 @@ def aws_ssm_send_command():
 
 def getCommandStatus(CommandId):
     response = SSM.list_command_invocations( CommandId=CommandId , Details=False )
-    print(f"response for getCommandStatus: {response}")
     return response['CommandInvocations'][0]['Status']
 
 def getCommandOutput(CommandId):
     response = SSM.get_command_invocation( CommandId=CommandId , InstanceId=instance_id )
-    print(f"response for getCommandOutput: {response}")
     return [ response['Status'] , response['StandardOutputContent'] , response['StandardErrorContent'] ]
 
 if __name__ == "__main__":
