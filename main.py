@@ -64,7 +64,7 @@ def getCommandStatus(CommandId):
     return response['CommandInvocations'][0]['Status']
 
 def getCommandOutput(CommandId):
-    response = SSM.get_command_invocation( CommandId=CommandId )
+    response = SSM.get_command_invocation( CommandId=CommandId , InstanceId=instance_id )
     print(f"response for getCommandOutput: {response}")
     return [ response['StandardOutputContent'] , response['StandardErrorContent'] ]
 
